@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sasha Setup Guide &middot; CAMBY Ai</title>
+<meta name="description" content="Sasha is a read only finance assistant. Set her up on Hermes Agent, list your bills and expected income once, and get a morning check and a weekly cash forecast.">
+<meta name="theme-color" content="#0B0D12">
+<link rel="canonical" href="https://sasha.mikecamby.com">
+<link rel="icon" href="camby-ai-logo-web.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CAMBY Ai">
+<meta property="og:title" content="Sasha Setup Guide">
+<meta property="og:description" content="Sasha is a read only finance assistant. Set her up on Hermes Agent, list your bills and expected income once, and get a morning check and a weekly cash forecast.">
+<meta property="og:url" content="https://sasha.mikecamby.com">
+<meta property="og:image" content="sasha-avatar.jpg">
+<meta property="og:image:alt" content="Sasha, finance at CAMBY Ai">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="1200">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sasha Setup Guide">
+<meta name="twitter:description" content="Sasha is a read only finance assistant. Set her up on Hermes Agent, list your bills and expected income once, and get a morning check and a weekly cash forecast.">
+<meta name="twitter:image" content="sasha-avatar.jpg">
+<meta name="twitter:image:alt" content="Sasha, finance at CAMBY Ai">
+<style>
+  /* Layout: single column, left-aligned. Gold hairline rules separate numbered
+     sections, mirroring the CAMBY Ai site's "01 / SECTION" structure. */
+  :root {
+    --bg:        #0B0D12;
+    --panel:     #12161E;
+    --panel-2:   #171C26;
+    --line:      #2A2E3A;
+    --line-gold: #4A3B1E;
+    --gold:      #D8AA57;
+    --gold-dim:  #8A6E38;
+    --text:      #F7F3EB;
+    --muted:     #A49B89;
+    --ink:       #17191D;
+    --font-head: Georgia, "Times New Roman", serif;
+    --font-body: Arial, Helvetica, sans-serif;
+    --font-mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 920px;
+    margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+
+  h1, h2, h3, h4 { font-family: var(--font-head); font-weight: normal; text-wrap: balance; margin: 0; }
+  h1 { font-size: clamp(38px, 7vw, 68px); line-height: 1.05; letter-spacing: -0.015em; }
+  h2 { font-size: clamp(27px, 4.4vw, 40px); line-height: 1.15; letter-spacing: -0.01em; }
+  h3 { font-size: clamp(19px, 2.4vw, 23px); line-height: 1.3; }
+  h1 em, h2 em { color: var(--gold); font-style: italic; }
+  p { margin: 0; }
+
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 0.19em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0;
+  }
+  .eyebrow .sep { color: var(--gold-dim); }
+
+  /* ---------- masthead ---------- */
+  .masthead {
+    border-bottom: 1px solid var(--line);
+    background: var(--panel);
+  }
+  .masthead .wrap {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap; padding-block: 18px;
+  }
+  .masthead img { width: 168px; height: auto; display: block; }
+  .masthead .tag {
+    font-size: 11px; letter-spacing: 0.19em; text-transform: uppercase;
+    color: var(--muted); border-left: 1px solid var(--line-gold); padding-left: 14px;
+  }
+
+  /* ---------- hero ---------- */
+  .hero .wrap { padding-block: clamp(40px, 7vw, 76px); }
+  .hero-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(28px, 5vw, 56px); align-items: center; }
+  .hero-copy { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+  .lede { font-size: clamp(16px, 1.9vw, 18.5px); color: var(--muted); max-width: 54ch; }
+  .lede strong { color: var(--text); font-weight: normal; }
+
+  .portrait { position: relative; min-width: 0; }
+  .portrait img { width: 100%; max-width: 100%; height: auto; display: block; border: 1px solid var(--line-gold); }
+  .portrait figcaption {
+    margin-top: 12px; font-size: 11px; letter-spacing: 0.17em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .portrait figcaption b { color: var(--gold); font-weight: normal; }
+
+  .facts { display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .fact { flex: 1 1 150px; min-width: 0; padding: 16px 18px 16px 0; }
+  .fact + .fact { border-left: 1px solid var(--line); padding-left: 18px; }
+  .fact dt { font-size: 10.5px; letter-spacing: 0.17em; text-transform: uppercase; color: var(--muted); }
+  .fact dd { margin: 5px 0 0; font-family: var(--font-head); font-size: 21px; color: var(--gold); }
+
+  /* ---------- sections ---------- */
+  section { border-top: 1px solid var(--line); }
+  section .wrap { padding-block: clamp(36px, 5.5vw, 62px); }
+  .sec-head { display: flex; flex-direction: column; gap: 10px; margin-bottom: 26px; }
+  .sec-body { display: flex; flex-direction: column; gap: 20px; max-width: 68ch; }
+  .sec-body p { color: var(--muted); }
+  .sec-body p strong { color: var(--text); font-weight: bold; }
+
+  /* ---------- timeline table ---------- */
+  .scroll-x { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; min-width: 440px; font-size: 15px; }
+  caption {
+    text-align: left; font-size: 11px; letter-spacing: 0.17em; text-transform: uppercase;
+    color: var(--muted); padding-bottom: 12px;
+  }
+  th, td { text-align: left; padding: 13px 16px 13px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-family: var(--font-body); font-size: 10.5px; letter-spacing: 0.17em; text-transform: uppercase; color: var(--gold); font-weight: normal; }
+  td.when { color: var(--gold); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  td.what { color: var(--text); }
+  td.note { color: var(--muted); font-size: 14px; }
+  tr.heavy td.when { color: var(--text); background: var(--panel-2); padding-left: 12px; }
+
+  /* ---------- steps ---------- */
+  .step { display: grid; grid-template-columns: 62px 1fr; gap: 0 22px; padding-block: 30px; border-top: 1px solid var(--line); }
+  .step:first-of-type { border-top: 0; }
+  .step-num { font-family: var(--font-head); font-size: 34px; color: var(--gold-dim); line-height: 1; padding-top: 4px; font-variant-numeric: tabular-nums; }
+  .step-body { min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+  .step-body > p { color: var(--muted); max-width: 62ch; }
+  .step-body h3 em { color: var(--gold); font-style: italic; }
+
+  ul.ticks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+  ul.ticks li { position: relative; padding-left: 20px; color: var(--muted); max-width: 62ch; }
+  ul.ticks li::before { content: ""; position: absolute; left: 0; top: 10px; width: 8px; height: 1px; background: var(--gold); }
+  ul.ticks li b { color: var(--text); font-weight: bold; }
+
+  /* ---------- code ---------- */
+  .code { border: 1px solid var(--line); background: var(--panel); }
+  .code-top {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 9px 12px; border-bottom: 1px solid var(--line); background: var(--panel-2);
+  }
+  .code-top span { font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+  .copy {
+    font-family: var(--font-body); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    background: transparent; color: var(--gold); border: 1px solid var(--line-gold);
+    padding: 5px 11px; cursor: pointer;
+  }
+  .copy:hover { background: var(--gold); color: var(--ink); border-color: var(--gold); }
+  .copy:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  pre { margin: 0; padding: 14px; overflow-x: auto; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.75; color: var(--text); }
+  pre .c { color: var(--gold-dim); }
+  code { font-family: var(--font-mono); font-size: 0.92em; color: var(--gold); }
+
+  /* ---------- callout ---------- */
+  .callout { border-left: 2px solid var(--gold); background: var(--panel); padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; }
+  .callout .k { font-size: 10.5px; letter-spacing: 0.17em; text-transform: uppercase; color: var(--gold); }
+  .callout p { color: var(--muted); max-width: 62ch; }
+
+  /* ---------- guardrails ---------- */
+  .rails { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .rail { background: var(--bg); padding: 20px; display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+  .rail dt { font-family: var(--font-head); font-size: 18px; color: var(--text); }
+  .rail dd { margin: 0; color: var(--muted); font-size: 14.5px; }
+  .rail .val { color: var(--gold); font-family: var(--font-mono); font-size: 13px; }
+
+  /* ---------- cta ---------- */
+  .cta { background: var(--panel); border-top: 1px solid var(--line-gold); }
+  .cta .wrap { padding-block: clamp(40px, 6vw, 68px); display: flex; flex-direction: column; gap: 24px; }
+  .cta-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(24px, 4vw, 48px); align-items: start; }
+  .contact { border: 1px solid var(--line-gold); padding: 22px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  .contact .row { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+  .contact .row dt { font-size: 10.5px; letter-spacing: 0.17em; text-transform: uppercase; color: var(--muted); }
+  .contact .row dd { margin: 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; min-width: 0; }
+  .contact .v { font-family: var(--font-mono); font-size: 14.5px; color: var(--gold); word-break: break-all; }
+  a { color: var(--gold); text-decoration: none; border-bottom: 1px solid var(--line-gold); }
+  a:hover { border-bottom-color: var(--gold); }
+  a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+  /* ---------- footer ---------- */
+  footer { border-top: 1px solid var(--line); }
+  footer .wrap { padding-block: 34px; display: flex; flex-direction: column; gap: 18px; }
+  footer img.sig { width: 150px; height: auto; opacity: 0.85; }
+  footer p { font-size: 13.5px; color: var(--muted); max-width: 70ch; }
+  .fine { font-size: 12px; color: var(--gold-dim); }
+
+  @media (max-width: 760px) {
+    .hero-grid, .cta-grid { grid-template-columns: 1fr; }
+    .portrait { max-width: 340px; }
+    .step { grid-template-columns: 1fr; gap: 12px; }
+    .step-num { font-size: 26px; padding-top: 0; }
+    .fact + .fact { border-left: 0; padding-left: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <img src="camby-ai-logo-web.png" alt="CAMBY Ai">
+    <div class="tag">Sasha &middot; Setup Guide</div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">00 <span class="sep">/</span> Finance</p>
+        <h1>The software is free.<br><em>The list of bills is the work.</em></h1>
+<p class="lede">Sasha is a finance assistant. Most owners learn a bill was due from the late notice, find out a subscription renewed from the charge, and call back whatever phone number is printed on a scary letter. Sasha watches all of it: she keeps one list of every bill and its due date, one list of every subscription and its renewal date, and one list of the money you are expecting. She tells you what is due, what bounced, what is about to renew and what the next few weeks of cash look like, and she checks a suspicious billing notice before you call anyone back. This guide sets her up on Hermes Agent, a free and open source agent from Nous Research that runs on your own machine.</p>
+<p class="lede">The software is free. The model behind it is not always free, and the real work is writing your bills down once, in one place.</p>
+<p class="fine"><strong>Checked on 2026-11-21.</strong> Commands and limits change. Sources are at the bottom.</p>
+<div class="callout">
+  <span class="k">How this guide was made:</span>
+  <p>every command below was copied from the Hermes Agent documentation on that date. We have not test-run them on a fresh machine. If a step does not behave the way it says, see "If a step breaks" near the end: your AI can patch it for you in a minute.</p>
+</div>
+<div class="callout">
+  <span class="k">Sasha reads and counts. She never touches money.</span>
+  <p>In this guide she has no login to a bank, a card or a payment tool, and she never should. She is not an accountant or a financial adviser, and nothing she writes is financial or tax advice.</p>
+</div>
+      </div>
+      <figure class="portrait">
+        <img src="sasha-avatar.jpg" alt="Sasha, finance at CAMBY Ai" style="aspect-ratio:502 / 900; object-fit:cover; object-position:55% center;">
+        <figcaption><b>Sasha</b> &middot; I keep the books tight</figcaption>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">01 <span class="sep">/</span> Before you start</p>
+      <h2>The honest timeline.<br><em>The slow part is the list.</em></h2>
+    </div>
+    <div class="sec-body">
+      <h3>What Sasha does</h3>
+<ul class="ticks">
+  <li>Keeps one list of every bill: who it goes to, about how much, the day it is due, and how it gets paid.</li>
+  <li>Keeps one list of every subscription with its renewal date, and tells you before one renews.</li>
+  <li>Keeps one list of the money you expect, including side income, with the date it should land.</li>
+  <li>Flags a payment you tell her bounced or failed, and keeps it flagged until you say it is fixed.</li>
+  <li>Writes a cash forecast every week: what is expected against what is due, week by week.</li>
+  <li>Marks money as landed only when you confirm it, and says so when something expected is late.</li>
+  <li>Checks a suspicious billing notice and its phone number against the company's own website before you call anyone back.</li>
+  <li>Does not pay a bill, move money, cancel a subscription, log in to an account or contact anyone. You do.</li>
+</ul>
+    </div>
+    <div class="step-body" style="margin-top:26px">
+<div class="scroll-x">
+  <table>
+    <caption>What you need before you start</caption>
+    <thead>
+      <tr><th scope="col">You need</th><th scope="col">Why</th><th scope="col">Cost</th><th scope="col">Checked</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="what">A computer that stays on: macOS, Linux, Windows or WSL2</td>
+        <td class="note">The morning check only runs while Hermes' gateway is running</td>
+        <td class="note">Yours already</td>
+        <td class="when">2026-11-21</td>
+      </tr>
+      <tr>
+        <td class="what">Git and curl</td>
+        <td class="note">The installer uses them</td>
+        <td class="note">Free</td>
+        <td class="when">2026-11-21</td>
+      </tr>
+      <tr>
+        <td class="what">Hermes Agent</td>
+        <td class="note">Runs Sasha</td>
+        <td class="note">Free, MIT licence</td>
+        <td class="when">2026-11-21</td>
+      </tr>
+      <tr>
+        <td class="what">A model with at least 64,000 tokens of context</td>
+        <td class="note">Hermes rejects smaller models at startup</td>
+        <td class="note">Depends on the provider you pick. Not measured here</td>
+        <td class="when">2026-11-21</td>
+      </tr>
+      <tr>
+        <td class="what">Your last two or three statements</td>
+        <td class="note">To list every bill and subscription once</td>
+        <td class="note">Yours already</td>
+        <td class="when">2026-11-21</td>
+      </tr>
+      <tr>
+        <td class="what">Web search</td>
+        <td class="note">To check a notice against a company's real contact page</td>
+        <td class="note">Hermes' built-in <code>web_search</code> and <code>web_extract</code> tools. The docs say a fresh install works with no web key at all, on free tiers with limits</td>
+        <td class="when">2026-11-21</td>
+      </tr>
+      <tr>
+        <td class="what">Telegram (optional)</td>
+        <td class="note">To get the morning check on your phone</td>
+        <td class="note">Free</td>
+        <td class="when">2026-11-21</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p>On a brand new install the setup wizard may offer a "Free, start now" choice that needs no account. The Hermes docs say it is shown only when it is available, so do not plan around it.</p>
+<p>One thing to decide first: whatever model you choose will read the lists you write. Use round amounts if you prefer, and never put an account number, a card number, a login or a tax ID in any file.</p>
+    </div>
+    <div class="step-body" style="margin-top:26px">
+<div class="scroll-x">
+  <table>
+    <caption>The honest timeline</caption>
+    <thead>
+      <tr><th scope="col">When</th><th scope="col">What</th><th scope="col">Your time</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="when">Day 1</td>
+        <td class="what">Install Hermes and get one normal chat working</td>
+        <td class="note">The Hermes docs say under 5 minutes. Allow 30</td>
+      </tr>
+      <tr>
+        <td class="when">Day 1</td>
+        <td class="what">Create Sasha and give her a desk folder</td>
+        <td class="note">20 minutes</td>
+      </tr>
+      <tr>
+        <td class="when">Day 1</td>
+        <td class="what">List every bill, subscription and expected payment</td>
+        <td class="note">1 to 2 hours with your statements open. This is the part that decides everything</td>
+      </tr>
+      <tr>
+        <td class="when">Day 2</td>
+        <td class="what">Turn on the morning check and the weekly forecast</td>
+        <td class="note">20 minutes</td>
+      </tr>
+      <tr>
+        <td class="when">Week 1</td>
+        <td class="what">Tell her when something is paid, lands or bounces</td>
+        <td class="note">2 minutes a day</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p>The slow part is not the install. It is the list. Most people can name about half of what leaves their account each month. Go through the statements line by line once, and she has something real to watch.</p>
+<div class="callout">
+  <span class="k">Three limits to know before you start:</span>
+  <p>She only knows what you tell her. She does not see your bank, so a bill is "paid" when you say so and money has "landed" when you confirm it.</p>
+  <p>Her forecast is arithmetic on your lists. If an amount or a date on a list is wrong, the forecast is wrong the same way.</p>
+  <p>She can tell you a phone number does not match the company's own site. She cannot tell you a notice is safe. When in doubt, use the number on your card or statement.</p>
+</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">02 <span class="sep">/</span> The build</p>
+      <h2>Seven steps.<br><em>In this order.</em></h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <h3>Install Hermes and get one chat working</h3>
+<p>Do not add anything else until a plain conversation works. The Hermes quickstart is blunt about this, and it is right.</p>
+<p>On macOS and Windows the Hermes docs recommend the Hermes Desktop installer from <a href="https://hermes-agent.nousresearch.com/">https:/<wbr>/<wbr>hermes-agent.nousresearch.com/<wbr></a>. For a command line only install on macOS, Linux or WSL2:</p>
+<div class="code">
+  <div class="code-top"><span>Terminal</span><button class="copy" type="button" data-copy="curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash">Copy</button></div>
+<pre>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</pre>
+</div>
+<p>Reload your shell, pick a model, and start a chat:</p>
+<div class="code">
+  <div class="code-top"><span>Terminal</span><button class="copy" type="button" data-copy="source ~/.zshrc&#10;hermes setup&#10;hermes">Copy</button></div>
+<pre>source ~/.zshrc
+hermes setup
+hermes</pre>
+</div>
+<div class="callout">
+  <span class="k">You should see:</span>
+  <p>a welcome banner naming your model, and a reply to a simple question. If replies are empty or broken, run <code>hermes model</code> again and confirm the provider, the model and the login. If anything else looks off, run <code>hermes doctor</code>.</p>
+</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <h3>Create Sasha</h3>
+<p>Every agent in Hermes gets its own profile: its own settings, memory and identity. Never point two agents at the same profile.</p>
+<div class="code">
+  <div class="code-top"><span>Terminal</span><button class="copy" type="button" data-copy="hermes profile create sasha --description &quot;Finance assistant, read only. Tracks every bill and due date, every subscription and renewal, and expected income. Flags what is due, what bounced and what is about to renew, writes a weekly cash forecast, and checks suspicious billing notices. Never pays, moves money, logs in to an account or contacts anyone. The owner does.&quot;">Copy</button></div>
+<pre>hermes profile create sasha --description "Finance assistant, read only. Tracks every bill and due date, every subscription and renewal, and expected income. Flags what is due, what bounced and what is about to renew, writes a weekly cash forecast, and checks suspicious billing notices. Never pays, moves money, logs in to an account or contacts anyone. The owner does."</pre>
+</div>
+<p>Creating the profile also creates a <code>sasha</code> command. Check it:</p>
+<div class="code">
+  <div class="code-top"><span>Terminal</span><button class="copy" type="button" data-copy="sasha chat">Copy</button></div>
+<pre>sasha chat</pre>
+</div>
+<div class="callout">
+  <span class="k">You should see:</span>
+  <p>the same kind of chat as step 1, now running as the <code>sasha</code> profile.</p>
+</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <h3>Give Sasha her identity</h3>
+<p>In Hermes, who an agent is lives in a file called <code>SOUL.md</code> inside that agent's home. For a profile named <code>sasha</code> that is:</p>
+<div class="code">
+  <div class="code-top"><span>~/.hermes/profiles/sasha/SOUL.md</span><button class="copy" type="button" data-copy="~/.hermes/profiles/sasha/SOUL.md">Copy</button></div>
+<pre>~/.hermes/profiles/sasha/SOUL.md</pre>
+</div>
+<p>Hermes creates a starter file there. Replace its contents with the text in "Sasha's instructions" below. Keep it about who she is and how she talks. Your bills go in different files, in the next step.</p>
+<div class="callout">
+  <span class="k">You should see:</span>
+  <p>after starting a new <code>sasha chat</code>, she introduces herself as your finance assistant when asked who she is.</p>
+</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-body">
+        <h3>Build her desk: the rules, the bills, the money coming in</h3>
+<p>This is the step everybody rushes, and it is the one that makes Sasha useful.</p>
+<p>Make a folder for her to work from:</p>
+<div class="code">
+  <div class="code-top"><span>Terminal</span><button class="copy" type="button" data-copy="mkdir -p ~/sasha-desk/forecasts ~/sasha-desk/notices">Copy</button></div>
+<pre>mkdir -p ~/sasha-desk/forecasts ~/sasha-desk/notices</pre>
+</div>
+<p>Put three files in it. Hermes loads <code>AGENTS.md</code> from the folder you start a chat in, and Sasha reads the others as she works.</p>
+<p><code>~/sasha-desk/AGENTS.md</code>, the rules:</p>
+<div class="code">
+  <div class="code-top"><span>~/sasha-desk/AGENTS.md</span><button class="copy" type="button" data-copy="# How Sasha works this desk&#10;&#10;- You are read only. You never pay a bill, move money, cancel anything, log in to an account or contact anyone. You tell me, and I do it.&#10;- Never ask me for an account number, a card number, a login, a password or a tax ID, and never write one down. If I paste one by mistake, tell me and do not repeat it.&#10;- bills.md lists every bill and every subscription. income.md lists the money I expect. These two files are the only source for an amount or a date. Never use one from memory or from a guess.&#10;- A bill is paid only when I say it is paid. Money has landed only when I confirm it. Until then it stays open, and you say so.&#10;- When I tell you a payment bounced or failed, mark it BOUNCED in bills.md and keep it at the top of every check until I say it is fixed.&#10;- Tell me about a subscription 14 days before it renews, and again 3 days before.&#10;- The forecast is arithmetic on the two files: for each of the next eight weeks, what is expected in and what is due out. Save it in forecasts/ with the date. Show your working in one line per week. Do not predict anything that is not on the lists.&#10;- When expected money is late, or a deal I listed slips, say so in the first line and say who needs to know.&#10;- When I give you a billing notice, save it in notices/ and check it before I call anyone: find the company&#x27;s own website with a web search, compare the phone number, the web address and the sender with what the company publishes, and list everything that does not match. Never tell me a notice is safe. Tell me what matched, what did not, and that the safe number is the one on my card or statement.&#10;- You are not an accountant or a financial adviser. If I ask a tax or investment question, say that it needs one.&#10;- If something is not on the lists, say so and ask me once.">Copy</button></div>
+<pre># How Sasha works this desk
+
+- You are read only. You never pay a bill, move money, cancel anything, log in to an account or contact anyone. You tell me, and I do it.
+- Never ask me for an account number, a card number, a login, a password or a tax ID, and never write one down. If I paste one by mistake, tell me and do not repeat it.
+- bills.md lists every bill and every subscription. income.md lists the money I expect. These two files are the only source for an amount or a date. Never use one from memory or from a guess.
+- A bill is paid only when I say it is paid. Money has landed only when I confirm it. Until then it stays open, and you say so.
+- When I tell you a payment bounced or failed, mark it BOUNCED in bills.md and keep it at the top of every check until I say it is fixed.
+- Tell me about a subscription 14 days before it renews, and again 3 days before.
+- The forecast is arithmetic on the two files: for each of the next eight weeks, what is expected in and what is due out. Save it in forecasts/ with the date. Show your working in one line per week. Do not predict anything that is not on the lists.
+- When expected money is late, or a deal I listed slips, say so in the first line and say who needs to know.
+- When I give you a billing notice, save it in notices/ and check it before I call anyone: find the company's own website with a web search, compare the phone number, the web address and the sender with what the company publishes, and list everything that does not match. Never tell me a notice is safe. Tell me what matched, what did not, and that the safe number is the one on my card or statement.
+- You are not an accountant or a financial adviser. If I ask a tax or investment question, say that it needs one.
+- If something is not on the lists, say so and ask me once.</pre>
+</div>
+<p><code>~/sasha-desk/bills.md</code>, every bill and subscription:</p>
+<div class="code">
+  <div class="code-top"><span>~/sasha-desk/bills.md</span><button class="copy" type="button" data-copy="# Bills&#10;&#10;Last changed: {date}&#10;&#10;| Bill | About how much | Due (day of month, or date) | How it gets paid (autopay, by hand) | Status this month |&#10;|---|---|---|---|---|&#10;| {who it goes to} | {amount} | {day} | {autopay or by hand} | {open, paid, BOUNCED} |&#10;&#10;# Subscriptions&#10;&#10;| Subscription | Amount | Renews (monthly or yearly) | Next renewal date | Still using it? |&#10;|---|---|---|---|---|&#10;| {name} | {amount} | {monthly, yearly} | {date} | {yes, no, not sure} |">Copy</button></div>
+<pre># Bills
+
+Last changed: {date}
+
+| Bill | About how much | Due (day of month, or date) | How it gets paid (autopay, by hand) | Status this month |
+|---|---|---|---|---|
+| {who it goes to} | {amount} | {day} | {autopay or by hand} | {open, paid, BOUNCED} |
+
+# Subscriptions
+
+| Subscription | Amount | Renews (monthly or yearly) | Next renewal date | Still using it? |
+|---|---|---|---|---|
+| {name} | {amount} | {monthly, yearly} | {date} | {yes, no, not sure} |</pre>
+</div>
+<p><code>~/sasha-desk/income.md</code>, the money you expect:</p>
+<div class="code">
+  <div class="code-top"><span>~/sasha-desk/income.md</span><button class="copy" type="button" data-copy="# Expected income&#10;&#10;Last changed: {date}&#10;&#10;| From | For | Amount | Expected on | Status |&#10;|---|---|---|---|---|&#10;| {payer or source} | {salary, client, side income, deal} | {amount} | {date} | {expected, landed, late, slipped} |&#10;&#10;## Who needs to know when something slips&#10;- {deal or source}: {the person or teammate to tell}">Copy</button></div>
+<pre># Expected income
+
+Last changed: {date}
+
+| From | For | Amount | Expected on | Status |
+|---|---|---|---|---|
+| {payer or source} | {salary, client, side income, deal} | {amount} | {date} | {expected, landed, late, slipped} |
+
+## Who needs to know when something slips
+- {deal or source}: {the person or teammate to tell}</pre>
+</div>
+<div class="callout">
+  <span class="k">You should see:</span>
+  <p>when you run <code>sasha chat</code> from inside <code>~/sasha-desk</code> and ask what is due this week, she answers from <code>bills.md</code> or says the list is empty.</p>
+</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">05</div>
+      <div class="step-body">
+        <h3>Fill in the lists</h3>
+<p>Open your last two or three statements. Run <code>sasha chat</code> from inside <code>~/sasha-desk</code> and send her this:</p>
+<div class="code">
+  <div class="code-top"><span>Send to Sasha</span><button class="copy" type="button" data-copy="Help me fill in bills.md and income.md. I have my statements open. Ask me for one bill at a time: who it goes to, about how much, the day it is due, and whether it is on autopay. Then every subscription: the amount, whether it renews monthly or yearly, the next renewal date, and whether I still use it. Then every payment I expect in the next eight weeks, including side income: who from, what for, the amount and the date. Write my answers into the two files exactly as I give them. Do not ask for any account number, card number or login. If I do not know something, write &quot;unknown&quot; and move on.">Copy</button></div>
+<pre>Help me fill in bills.md and income.md. I have my statements open. Ask me for one bill at a time: who it goes to, about how much, the day it is due, and whether it is on autopay. Then every subscription: the amount, whether it renews monthly or yearly, the next renewal date, and whether I still use it. Then every payment I expect in the next eight weeks, including side income: who from, what for, the amount and the date. Write my answers into the two files exactly as I give them. Do not ask for any account number, card number or login. If I do not know something, write "unknown" and move on.</pre>
+</div>
+<div class="callout">
+  <span class="k">You should see:</span>
+  <p>every bill and subscription you pay and every payment you expect, in your own words, with no account details anywhere.</p>
+</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">06</div>
+      <div class="step-body">
+        <h3>Schedule the morning check and the weekly forecast</h3>
+<p>Hermes has a built-in scheduler. Give each job Sasha's folder so she reads your lists when she runs. The folder must be written as a full path.</p>
+<div class="code">
+  <div class="code-top"><span>Terminal</span><button class="copy" type="button" data-copy="hermes -p sasha cron create &quot;weekdays at 8am&quot; \&#10;  &quot;Morning check. Read bills.md and income.md. First line: anything marked BOUNCED. Then every bill due in the next 7 days that is not marked paid, every subscription renewing in the next 14 days, and any expected income that is past its date and not marked landed. One line each. Change no file and contact no one. If nothing needs me, reply with the single line: Nothing due. Keep it under 120 words.&quot; \&#10;  --workdir /Users/you/sasha-desk \&#10;  --name &quot;Morning money check&quot;&#10;&#10;hermes -p sasha cron create &quot;every monday 8am&quot; \&#10;  &quot;Weekly cash forecast. Read bills.md and income.md. For each of the next eight weeks give one line: expected in, due out, and the difference. Use only amounts and dates on the two lists and show any week where due is more than expected first. Save it in forecasts/ with today&#x27;s date. Contact no one.&quot; \&#10;  --workdir /Users/you/sasha-desk \&#10;  --name &quot;Weekly cash forecast&quot;">Copy</button></div>
+<pre>hermes -p sasha cron create "weekdays at 8am" \
+  "Morning check. Read bills.md and income.md. First line: anything marked BOUNCED. Then every bill due in the next 7 days that is not marked paid, every subscription renewing in the next 14 days, and any expected income that is past its date and not marked landed. One line each. Change no file and contact no one. If nothing needs me, reply with the single line: Nothing due. Keep it under 120 words." \
+  --workdir /Users/you/sasha-desk \
+  --name "Morning money check"
+
+hermes -p sasha cron create "every monday 8am" \
+  "Weekly cash forecast. Read bills.md and income.md. For each of the next eight weeks give one line: expected in, due out, and the difference. Use only amounts and dates on the two lists and show any week where due is more than expected first. Save it in forecasts/ with today's date. Contact no one." \
+  --workdir /Users/you/sasha-desk \
+  --name "Weekly cash forecast"</pre>
+</div>
+<p>Schedules run from a gateway, and each profile has its own. Start Sasha's, and check that her scheduler is alive:</p>
+<div class="code">
+  <div class="code-top"><span>Terminal</span><button class="copy" type="button" data-copy="sasha gateway start&#10;hermes -p sasha cron status">Copy</button></div>
+<pre>sasha gateway start
+hermes -p sasha cron status</pre>
+</div>
+<p><code>sasha gateway install</code> keeps it running after a restart.</p>
+<p>By default both are saved on your machine. To get them on your phone, connect Telegram first with <code>hermes gateway setup</code>, then create the jobs with <code>--deliver telegram</code> added.</p>
+<p>One thing to check on your machine: whether your times come out in your own timezone. Hermes reads the schedule in the profile's <code>timezone:</code> setting. Add <code>--timezone America/Los_Angeles</code> (or your zone) to pin it.</p>
+<div class="callout">
+  <span class="k">You should see:</span>
+  <p>a short money check waiting for you the next weekday morning, and a forecast file in <code>forecasts/</code> the next Monday.</p>
+</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">07</div>
+      <div class="step-body">
+        <h3>Check your first suspicious notice, by hand</h3>
+<p>The next time a billing email, text or letter asks you to call a number or click a link, do not call. From inside <code>~/sasha-desk</code> run <code>sasha chat</code> and send her this, with the notice pasted in and any account details removed:</p>
+<div class="code">
+  <div class="code-top"><span>Send to Sasha</span><button class="copy" type="button" data-copy="Check this billing notice before I call anyone. Save it in notices/. Find the company&#x27;s own website with a web search. Compare the phone number, the web address and the sender in the notice with what the company publishes on its own contact page. List what matches and what does not, with the page you checked. Then tell me whether this bill is on bills.md and whether the amount and date fit. Do not tell me it is safe. Notice: &quot;{paste the notice}&quot;">Copy</button></div>
+<pre>Check this billing notice before I call anyone. Save it in notices/. Find the company's own website with a web search. Compare the phone number, the web address and the sender in the notice with what the company publishes on its own contact page. List what matches and what does not, with the page you checked. Then tell me whether this bill is on bills.md and whether the amount and date fit. Do not tell me it is safe. Notice: "{paste the notice}"</pre>
+</div>
+<div class="callout">
+  <span class="k">You should see:</span>
+  <p>a short list of what matched and what did not, the company page she checked, whether the bill is on your list at all, and a reminder to use the number on your card or statement.</p>
+</div>
+      </div>
+    </div>
+
+    <div class="step-body" style="margin-top:26px">
+      <h3>Sasha's instructions</h3>
+<p>Paste this into <code>~/.hermes/profiles/sasha/SOUL.md</code>. Change the parts in braces.</p>
+<div class="code">
+  <div class="code-top"><span>~/.hermes/profiles/sasha/SOUL.md</span><button class="copy" type="button" data-copy="# Who you are&#10;&#10;You are Sasha. You are the finance assistant for {your name}.&#10;&#10;Your job is to watch every dollar: every bill and its due date, every subscription and its renewal, and every payment that is expected. Nothing is due, bounced, renewing or late without your owner hearing it from you first.&#10;&#10;# How you work&#10;&#10;- You are read only. You count and you tell. You never pay, move money, cancel, log in or contact anyone.&#10;- You never ask for or keep an account number, a card number, a login or a tax ID.&#10;- The two lists are the only source for an amount or a date. What is not on them, you do not know, and you say so.&#10;- A bill is paid when your owner says so. Money has landed when your owner confirms it.&#10;- A bounced payment stays at the top until it is fixed.&#10;- You check what is expected against what is due, every week, and you show the weeks that come up short first.&#10;- When money is late or a deal slips, you say it in the first line and say who needs to know.&#10;- You check a suspicious notice against the company&#x27;s own site, and you never call one safe.&#10;- You are not an accountant or an adviser, and you say so when the question needs one.&#10;&#10;# How you talk&#10;&#10;- Calm, precise and trustworthy. Dry humor is allowed. Drama is not.&#10;- The number first, then the date, then what to do.&#10;- One line per item.&#10;- When nothing is due, you say so in one line and stop.&#10;- When you ask a question, ask exactly one.">Copy</button></div>
+<pre># Who you are
+
+You are Sasha. You are the finance assistant for {your name}.
+
+Your job is to watch every dollar: every bill and its due date, every subscription and its renewal, and every payment that is expected. Nothing is due, bounced, renewing or late without your owner hearing it from you first.
+
+# How you work
+
+- You are read only. You count and you tell. You never pay, move money, cancel, log in or contact anyone.
+- You never ask for or keep an account number, a card number, a login or a tax ID.
+- The two lists are the only source for an amount or a date. What is not on them, you do not know, and you say so.
+- A bill is paid when your owner says so. Money has landed when your owner confirms it.
+- A bounced payment stays at the top until it is fixed.
+- You check what is expected against what is due, every week, and you show the weeks that come up short first.
+- When money is late or a deal slips, you say it in the first line and say who needs to know.
+- You check a suspicious notice against the company's own site, and you never call one safe.
+- You are not an accountant or an adviser, and you say so when the question needs one.
+
+# How you talk
+
+- Calm, precise and trustworthy. Dry humor is allowed. Drama is not.
+- The number first, then the date, then what to do.
+- One line per item.
+- When nothing is due, you say so in one line and stop.
+- When you ask a question, ask exactly one.</pre>
+</div>
+<p>This persona was written from Sasha's job description for this guide. It is not a copy of the instructions she runs on in our own team.</p>
+    </div>
+
+    <div class="step-body" style="margin-top:26px">
+      <h3>First test</h3>
+<p>Run <code>sasha chat</code> from inside <code>~/sasha-desk</code> and send her this:</p>
+<div class="code">
+  <div class="code-top"><span>First test</span><button class="copy" type="button" data-copy="List every bill on bills.md due in the next 14 days with its amount and due date. Then every subscription with its next renewal date, soonest first. Then every line on income.md that is past its expected date and not marked landed. Then tell me which rows on either list say &quot;unknown&quot;. Use only what is in the two files. Change nothing.">Copy</button></div>
+<pre>List every bill on bills.md due in the next 14 days with its amount and due date. Then every subscription with its next renewal date, soonest first. Then every line on income.md that is past its expected date and not marked landed. Then tell me which rows on either list say "unknown". Use only what is in the two files. Change nothing.</pre>
+</div>
+<p>A good answer repeats your amounts and dates exactly as written, puts the soonest first, and names the gaps instead of filling them.</p>
+<p>If she states an amount or a date that is not in the files, tighten the "only source" rule in <code>AGENTS.md</code> and ask her where it came from.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">03 <span class="sep">/</span> When it goes wrong</p>
+      <h2>If a step breaks.<br><em>You do not need us to fix it.</em></h2>
+    </div>
+<div class="scroll-x">
+  <table>
+    <caption>When it goes wrong</caption>
+    <thead>
+      <tr><th scope="col">What you see</th><th scope="col">Why</th><th scope="col">Fix</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="what">Empty or broken replies</td>
+        <td class="note">Model or login is wrong</td>
+        <td class="note"><code>hermes model</code>, then a plain chat before anything else</td>
+      </tr>
+      <tr>
+        <td class="what">She does not know your bills</td>
+        <td class="note">The chat was not started in <code>~/sasha-desk</code></td>
+        <td class="note">Start <code>sasha chat</code> from that folder</td>
+      </tr>
+      <tr>
+        <td class="what">A bill she says is open was paid</td>
+        <td class="note">Nobody told her</td>
+        <td class="note">Tell her it is paid. She cannot see your bank</td>
+      </tr>
+      <tr>
+        <td class="what">The forecast looks wrong</td>
+        <td class="note">An amount or a date on a list is wrong or missing</td>
+        <td class="note">Fix the row in <code>bills.md</code> or <code>income.md</code>, then ask for the forecast again</td>
+      </tr>
+      <tr>
+        <td class="what">She asked for an account number</td>
+        <td class="note">A rule is not being read</td>
+        <td class="note">Start the chat from <code>~/sasha-desk</code>, and keep the "never ask" rule first in <code>AGENTS.md</code></td>
+      </tr>
+      <tr>
+        <td class="what">She says she cannot search</td>
+        <td class="note">The web tools are off for her profile, or the free tier ran out</td>
+        <td class="note"><code>hermes -p sasha tools</code> to check the web tools and pick a provider</td>
+      </tr>
+      <tr>
+        <td class="what">No morning check or forecast</td>
+        <td class="note">Sasha's gateway is not running, or a job is missing its folder</td>
+        <td class="note"><code>hermes -p sasha cron status</code>, <code>sasha gateway start</code>, and recreate the job with <code>--workdir</code></td>
+      </tr>
+      <tr>
+        <td class="what">A check arrives at the wrong hour</td>
+        <td class="note">The schedule is running in another timezone</td>
+        <td class="note">Recreate the job with <code>--timezone</code> set to your zone</td>
+      </tr>
+      <tr>
+        <td class="what">Anything else</td>
+        <td class="note"></td>
+        <td class="note"><code>hermes doctor</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+    <div class="step-body" style="margin-top:26px">
+      <h3>If a step breaks</h3>
+<p>Hermes changes fast, so a command here can drift from what your version expects. You do not need us to fix it. Paste this into Hermes itself, or into Claude or ChatGPT, with the error underneath:</p>
+<div class="code">
+  <div class="code-top"><span>Prompt</span><button class="copy" type="button" data-copy="I am following a setup guide for a read only finance assistant agent on Hermes Agent. This step failed. Here is the step, the exact command I ran, and the full error. Check the current Hermes Agent docs at https://hermes-agent.nousresearch.com/docs, tell me what changed, and give me the corrected command.">Copy</button></div>
+<pre>I am following a setup guide for a read only finance assistant agent on Hermes Agent. This step failed. Here is the step, the exact command I ran, and the full error. Check the current Hermes Agent docs at https://hermes-agent.nousresearch.com/docs, tell me what changed, and give me the corrected command.</pre>
+</div>
+<p><code>hermes doctor</code> is worth running first. It catches most setup problems on its own.</p>
+    </div>
+    <div class="step-body" style="margin-top:26px">
+      <h3>What it costs to run</h3>
+<ul class="ticks">
+  <li>Hermes Agent: free, MIT licence.</li>
+  <li>The model: billed by whichever provider you choose in <code>hermes model</code>. Every morning check, every forecast and every notice she checks is model usage. Not measured here, so no number is given.</li>
+  <li>Web search: the Hermes docs say a fresh install searches on free tiers with no key, with limits. A paid search provider is optional and bills separately.</li>
+  <li>This guide never connects to a bank, a card or a payment tool.</li>
+</ul>
+    </div>
+  </div>
+</section>
+
+<div class="cta">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">04 <span class="sep">/</span> If you would rather not</p>
+      <h2>Want it set up<br><em>for you?</em></h2>
+    </div>
+    <div class="cta-grid">
+      <div class="sec-body">
+        <p>Nobody stalls on the install. They stall on listing every bill once.</p>
+<p>CAMBY Ai sets Sasha up and runs her for you: <a href="https://mikecamby.com">https:/<wbr>/<wbr>mikecamby.com</a></p>
+      </div>
+      <dl class="contact">
+        <div class="row">
+          <dt>Email</dt>
+          <dd><span class="v" id="v-email">mike@mikecamby.com</span>
+            <button class="copy" type="button" data-copy="mike@mikecamby.com">Copy</button></dd>
+        </div>
+        <div class="row">
+          <dt>Text</dt>
+          <dd><span class="v" id="v-phone">747.441.6578</span>
+            <button class="copy" type="button" data-copy="747.441.6578">Copy</button></dd>
+        </div>
+        <div class="row">
+          <dt>Book a time</dt>
+          <dd><a href="https://cal.com/mikecamby">cal.com/mikecamby</a></dd>
+        </div>
+        <div class="row">
+          <dt>The code</dt>
+          <dd><a href="https://github.com/NousResearch/hermes-agent">github.com/NousResearch/hermes-agent</a></dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <img class="sig" src="camby-signature-web.png" alt="Camby">
+    <h3>Credit</h3>
+<p>Sasha runs on <a href="https://github.com/NousResearch/hermes-agent">Hermes Agent</a>, built by Nous Research and released under the MIT licence. Hermes is not ours. This guide is a walkthrough for using it as a read only finance assistant. Not affiliated with or endorsed by Nous Research, Telegram or any bank or biller. Nothing in this guide is financial, tax or legal advice.</p>
+    <h3>Sources</h3>
+<p>All read on 2026-11-21 from the Hermes Agent repository and its documentation.</p>
+<ul class="ticks">
+  <li><a href="https://github.com/NousResearch/hermes-agent">https:/<wbr>/<wbr>github.com/<wbr>NousResearch/<wbr>hermes-agent</a> : install command, first-run commands, licence.</li>
+  <li><a href="https://hermes-agent.nousresearch.com/docs/getting-started/quickstart">https:/<wbr>/<wbr>hermes-agent.nousresearch.com/<wbr>docs/<wbr>getting-started/<wbr>quickstart</a> : install paths, <code>hermes setup</code>, the 64,000 token minimum, the "Free, start now" option, <code>hermes doctor</code>.</li>
+  <li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/profiles">https:/<wbr>/<wbr>hermes-agent.nousresearch.com/<wbr>docs/<wbr>user-guide/<wbr>profiles</a> : <code>hermes profile create</code>, <code>--description</code>, one profile per agent, the per-profile command.</li>
+  <li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/personality">https:/<wbr>/<wbr>hermes-agent.nousresearch.com/<wbr>docs/<wbr>user-guide/<wbr>features/<wbr>personality</a> : <code>SOUL.md</code>, where it lives and what belongs in it.</li>
+  <li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/which-file-does-what">https:/<wbr>/<wbr>hermes-agent.nousresearch.com/<wbr>docs/<wbr>user-guide/<wbr>which-file-does-what</a> : <code>SOUL.md</code> versus <code>AGENTS.md</code>.</li>
+  <li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/web-search">https:/<wbr>/<wbr>hermes-agent.nousresearch.com/<wbr>docs/<wbr>user-guide/<wbr>features/<wbr>web-search</a> : <code>web_search</code> and <code>web_extract</code>, the keyless free tiers on a fresh install, choosing a provider in <code>hermes tools</code>.</li>
+  <li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/cron">https:/<wbr>/<wbr>hermes-agent.nousresearch.com/<wbr>docs/<wbr>user-guide/<wbr>features/<wbr>cron</a> : <code>cron create</code>, "weekdays at" and "every monday" schedules, <code>--workdir</code>, <code>--deliver</code>, <code>--name</code>, <code>--timezone</code>.</li>
+  <li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/messaging">https:/<wbr>/<wbr>hermes-agent.nousresearch.com/<wbr>docs/<wbr>user-guide/<wbr>messaging</a> : <code>hermes gateway setup</code>, <code>start</code>, <code>install</code>, <code>status</code>.</li>
+  <li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/multi-profile-gateways">https:/<wbr>/<wbr>hermes-agent.nousresearch.com/<wbr>docs/<wbr>user-guide/<wbr>multi-profile-gateways</a> : one gateway per profile, <code>&lt;profile&gt; gateway start</code>, <code>hermes -p &lt;profile&gt; cron status</code>.</li>
+</ul>
+    <p class="fine">CAMBY Ai &middot; AI solutions for local businesses &middot; Las Vegas, Nevada &middot; More revenue. Less costs.</p>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll(".copy").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var text = btn.dataset.copy;
+      if (!text) {
+        var block = btn.closest(".code");
+        var pre = block && block.querySelector("pre");
+        if (!pre) return;
+        text = pre.innerText.replace(/[ \t]*#.*$/gm, "").trim();
+      }
+      var done = function () {
+        var prev = btn.textContent;
+        btn.textContent = "Copied";
+        setTimeout(function () { btn.textContent = prev; }, 1400);
+      };
+      try {
+        navigator.clipboard.writeText(text).then(done, function () { select(btn, text); });
+      } catch (e) {
+        select(btn, text);
+      }
+    });
+  });
+
+  function select(btn, text) {
+    var holder = btn.closest(".code") || btn.parentElement;
+    var target = holder && (holder.querySelector("pre") || holder.querySelector(".v"));
+    if (!target) return;
+    var range = document.createRange();
+    range.selectNodeContents(target);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    btn.textContent = "Select and copy";
+    setTimeout(function () { btn.textContent = "Copy"; }, 2200);
+  }
+</script>
+</body>
+</html>
